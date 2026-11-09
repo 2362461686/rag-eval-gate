@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: pip install -r requirements.txt
+      - name: Unit and differential tests
+        run: pytest -q
+      - name: Mutation testing
+        run: python tools/mutate.py --jobs 4
+      - name: Gate passes an unchanged run
+        run: python -m ragate.gate results/runs/baseline.json results/runs/baseline.json
+      - name: Gate blocks the recorded silent-fallback regression
+        run: |
+          status=0
+          python -m ragate.gate results/runs/baseline.json results/runs/candidate_silent_fallback.json || status=$?
+          test "$status" -eq 1

@@ -1,0 +1,892 @@
+{
+ "dataset": {
+  "name": "BEIR SciFact (test)",
+  "documents": 5183,
+  "queries": 300
+ },
+ "gate": {
+  "margin": 0.01,
+  "alpha": 0.05,
+  "correction": "holm",
+  "test": "paired sign-flip"
+ },
+ "baseline": {
+  "config": {
+   "lowercase": true,
+   "remove_stopwords": true,
+   "index_title": true,
+   "doc_max_words": null,
+   "query_max_words": null,
+   "k1": 1.2,
+   "b": 0.75,
+   "query_prefix": true,
+   "normalize": true,
+   "pooling": "cls",
+   "fusion": "rrf",
+   "rrf_k": 60,
+   "depth": 100,
+   "top_k": 10,
+   "drop_docs": 0.0,
+   "drop_seed": 0
+  },
+  "means": {
+   "ndcg@10": 0.7037744607690751,
+   "recall@10": 0.8270555555555555,
+   "mrr@10": 0.669505291005291
+  }
+ },
+ "retrievers": {
+  "bm25": {
+   "ndcg@10": 0.6652367938937048,
+   "recall@10": 0.7832777777777779,
+   "mrr@10": 0.6349338624338624
+  },
+  "dense": {
+   "ndcg@10": 0.694788124292323,
+   "recall@10": 0.8162222222222223,
+   "mrr@10": 0.663255291005291
+  },
+  "hybrid_rrf": {
+   "ndcg@10": 0.7037744607690751,
+   "recall@10": 0.8270555555555555,
+   "mrr@10": 0.669505291005291
+  }
+ },
+ "faults": [
+  {
+   "name": "tokenizer_lost_lowercasing",
+   "description": "BM25 分词丢了小写归一",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6522619047619047,
+     "delta": -0.017243386243386245,
+     "ci_low": -0.03714391534391533,
+     "ci_high": 0.0015748015873015763,
+     "p_value": 0.0403959604039596,
+     "p_adjusted": 0.046795320467953205,
+     "regressed": true
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.6840885148620675,
+     "delta": -0.019685945907007753,
+     "ci_low": -0.03574435362961782,
+     "ci_high": -0.004885935538409081,
+     "p_value": 0.006099390060993901,
+     "p_adjusted": 0.0182981701829817,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8057222222222222,
+     "delta": -0.021333333333333336,
+     "ci_low": -0.043000000000000003,
+     "ci_high": -0.0013333333333333335,
+     "p_value": 0.023397660233976603,
+     "p_adjusted": 0.046795320467953205,
+     "regressed": true
+    }
+   ]
+  },
+  {
+   "name": "stopwords_kept",
+   "description": "BM25 停用词过滤失效",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6700013227513227,
+     "delta": 0.0004960317460317461,
+     "ci_low": -0.005312334656084654,
+     "ci_high": 0.006778141534391529,
+     "p_value": 0.5441455854414559,
+     "p_adjusted": 0.6063393660633937,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7025946569319611,
+     "delta": -0.0011798038371141366,
+     "ci_low": -0.005675464764230106,
+     "ci_high": 0.0031915048092258126,
+     "p_value": 0.30316968303169683,
+     "p_adjusted": 0.6063393660633937,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8197222222222222,
+     "delta": -0.007333333333333334,
+     "ci_low": -0.018000000000000002,
+     "ci_high": 0.0,
+     "p_value": 0.1161883811618838,
+     "p_adjusted": 0.34856514348565143,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "ingest_lost_title",
+   "description": "入库时丢失文档标题",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6539788359788361,
+     "delta": -0.015526455026455027,
+     "ci_low": -0.030379596560846534,
+     "ci_high": -0.0014391534391534396,
+     "p_value": 0.0182981701829817,
+     "p_adjusted": 0.0365963403659634,
+     "regressed": true
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.6888149618382371,
+     "delta": -0.014959498930838162,
+     "ci_low": -0.027521090249971958,
+     "ci_high": -0.0030479296698560842,
+     "p_value": 0.007699230076992301,
+     "p_adjusted": 0.0230976902309769,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8197222222222222,
+     "delta": -0.007333333333333334,
+     "ci_low": -0.024,
+     "ci_high": 0.008666666666666666,
+     "p_value": 0.2253774622537746,
+     "p_adjusted": 0.2253774622537746,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "chunk_truncated_32_words",
+   "description": "切块错误，只保留前 32 词",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.5068611111111111,
+     "delta": -0.1626441798941799,
+     "ci_low": -0.20443333333333333,
+     "ci_high": -0.12121524470899475,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.546616105821987,
+     "delta": -0.1571583549470882,
+     "ci_low": -0.19595142672428859,
+     "ci_high": -0.11928429967894723,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.6948333333333333,
+     "delta": -0.13222222222222224,
+     "ci_low": -0.17833333333333334,
+     "ci_high": -0.0875,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    }
+   ]
+  },
+  {
+   "name": "query_truncated_8_words",
+   "description": "查询被截断到 8 词",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.5748095238095239,
+     "delta": -0.0946957671957672,
+     "ci_low": -0.12469404761904761,
+     "ci_high": -0.06513468915343916,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.6090149854557713,
+     "delta": -0.09475947531330398,
+     "ci_low": -0.12314097277092897,
+     "ci_high": -0.06713650292185758,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.7381666666666666,
+     "delta": -0.08888888888888889,
+     "ci_low": -0.12555555555555556,
+     "ci_high": -0.053888888888888896,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    }
+   ]
+  },
+  {
+   "name": "bge_query_prefix_missing",
+   "description": "漏掉 BGE 查询前缀",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6732089947089948,
+     "delta": 0.003703703703703704,
+     "ci_low": -0.007166699735449735,
+     "ci_high": 0.014621792328042327,
+     "p_value": 0.7461253874612539,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7085654768993047,
+     "delta": 0.004791016130229486,
+     "ci_low": -0.0045514358569166535,
+     "ci_high": 0.014300212097573959,
+     "p_value": 0.8427157284271573,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8327222222222223,
+     "delta": 0.005666666666666666,
+     "ci_low": -0.009333333333333332,
+     "ci_high": 0.020666666666666667,
+     "p_value": 0.8112188781121887,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "embeddings_not_normalized",
+   "description": "向量未归一化",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6694497354497355,
+     "delta": -5.5555555555556466e-05,
+     "ci_low": -0.005338822751322751,
+     "ci_high": 0.005277777777777778,
+     "p_value": 0.47885211478852113,
+     "p_adjusted": 0.7337266273372662,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.702499235478772,
+     "delta": -0.0012752252903032604,
+     "ci_low": -0.006041262440132292,
+     "ci_high": 0.003326523068516215,
+     "p_value": 0.2999700029997,
+     "p_adjusted": 0.7337266273372662,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.820388888888889,
+     "delta": -0.006666666666666667,
+     "ci_low": -0.016666666666666666,
+     "ci_high": 0.0,
+     "p_value": 0.2445755424457554,
+     "p_adjusted": 0.7337266273372662,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "wrong_pooling_mean",
+   "description": "BGE 误用 mean pooling",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6632248677248677,
+     "delta": -0.00628042328042328,
+     "ci_low": -0.01763366402116402,
+     "ci_high": 0.004838657407407408,
+     "p_value": 0.14028597140285973,
+     "p_adjusted": 0.28057194280571945,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.6968501079370303,
+     "delta": -0.006924352832045004,
+     "ci_low": -0.016393092228429693,
+     "ci_high": 0.0022256422830786745,
+     "p_value": 0.0746925307469253,
+     "p_adjusted": 0.22407759224077592,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8228888888888889,
+     "delta": -0.004166666666666667,
+     "ci_low": -0.019166666666666665,
+     "ci_high": 0.01,
+     "p_value": 0.34606539346065396,
+     "p_adjusted": 0.34606539346065396,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "silent_fallback_to_bm25",
+   "description": "向量服务静默降级，只剩 BM25",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6349338624338624,
+     "delta": -0.03457142857142858,
+     "ci_low": -0.059648280423280416,
+     "ci_high": -0.010338425925925926,
+     "p_value": 0.0035996400359964,
+     "p_adjusted": 0.006999300069993001,
+     "regressed": true
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.6652367938937047,
+     "delta": -0.038537666875370524,
+     "ci_low": -0.06075479286046042,
+     "ci_high": -0.016053799807022758,
+     "p_value": 0.0004999500049995,
+     "p_adjusted": 0.0014998500149985001,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.7832777777777779,
+     "delta": -0.04377777777777778,
+     "ci_low": -0.07655833333333331,
+     "ci_high": -0.01211111111111111,
+     "p_value": 0.0034996500349965005,
+     "p_adjusted": 0.006999300069993001,
+     "regressed": true
+    }
+   ]
+  },
+  {
+   "name": "silent_fallback_to_dense",
+   "description": "关键词索引静默降级，只剩向量",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.663255291005291,
+     "delta": -0.006249999999999998,
+     "ci_low": -0.038543716931216936,
+     "ci_high": 0.026365211640211637,
+     "p_value": 0.3448655134486551,
+     "p_adjusted": 0.7904209579042096,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.694788124292323,
+     "delta": -0.008986336476752316,
+     "ci_low": -0.03801376725461443,
+     "ci_high": 0.020274568043472954,
+     "p_value": 0.26347365263473654,
+     "p_adjusted": 0.7904209579042096,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8162222222222223,
+     "delta": -0.010833333333333334,
+     "ci_low": -0.05,
+     "ci_high": 0.02666666666666667,
+     "p_value": 0.3046695330466953,
+     "p_adjusted": 0.7904209579042096,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "rrf_k_zero",
+   "description": "RRF 平滑常数被置 0",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.684712962962963,
+     "delta": 0.015207671957671955,
+     "ci_low": -0.00010062830687830713,
+     "ci_high": 0.030495105820105815,
+     "p_value": 0.9707029297070293,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7226539827800444,
+     "delta": 0.018879522010969277,
+     "ci_low": 0.0020894888931556454,
+     "ci_high": 0.03623915236357272,
+     "p_value": 0.9829017098290171,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8545555555555556,
+     "delta": 0.0275,
+     "ci_low": -0.006666666666666667,
+     "ci_high": 0.06166666666666667,
+     "p_value": 0.9444055594440556,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "candidate_depth_10",
+   "description": "召回深度从 100 掉到 10",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6766534391534391,
+     "delta": 0.007148148148148148,
+     "ci_low": -0.0022633267195767185,
+     "ci_high": 0.017033234126984122,
+     "p_value": 0.9234076592340766,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7128659718852088,
+     "delta": 0.009091511116133653,
+     "ci_low": -0.00526062979985354,
+     "ci_high": 0.02368392723813973,
+     "p_value": 0.8895110488951105,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8501111111111112,
+     "delta": 0.023055555555555555,
+     "ci_low": -0.01111111111111111,
+     "ci_high": 0.05805555555555555,
+     "p_value": 0.9054094590540946,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "ingest_lost_10pct_docs",
+   "description": "入库丢失 10% 文档",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6044748677248678,
+     "delta": -0.06503042328042327,
+     "ci_low": -0.09363435846560847,
+     "ci_high": -0.03854632936507938,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.6356252639967337,
+     "delta": -0.06814919677234159,
+     "ci_low": -0.09712596844404095,
+     "ci_high": -0.04110549975870046,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.7520555555555556,
+     "delta": -0.075,
+     "ci_low": -0.10666666666666667,
+     "ci_high": -0.045,
+     "p_value": 9.999000099990002e-05,
+     "p_adjusted": 0.00029997000299970003,
+     "regressed": true
+    }
+   ]
+  },
+  {
+   "name": "top_k_off_by_one",
+   "description": "TopK 差一，只返回 9 条",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.669505291005291,
+     "delta": 0.0,
+     "ci_low": 0.0,
+     "ci_high": 0.0,
+     "p_value": 1.0,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.703398310297912,
+     "delta": -0.0003761504711631177,
+     "ci_low": -0.0011284514134893532,
+     "ci_high": 0.0,
+     "p_value": 0.49925007499250074,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8262222222222223,
+     "delta": -0.0008333333333333334,
+     "ci_low": -0.0025,
+     "ci_high": 0.0,
+     "p_value": 0.49925007499250074,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "bm25_tf_saturation_broken",
+   "description": "BM25 k1=0，词频失效",
+   "detected": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.665728835978836,
+     "delta": -0.003776455026455025,
+     "ci_low": -0.022470965608465607,
+     "ci_high": 0.014875661375661375,
+     "p_value": 0.3414658534146585,
+     "p_adjusted": 0.6440355964403559,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.697967937182013,
+     "delta": -0.0058065235870621516,
+     "ci_low": -0.020510936226688776,
+     "ci_high": 0.008631292347012237,
+     "p_value": 0.2146785321467853,
+     "p_adjusted": 0.6440355964403559,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8195555555555556,
+     "delta": -0.0075,
+     "ci_low": -0.02666666666666667,
+     "ci_high": 0.01,
+     "p_value": 0.2518748125187481,
+     "p_adjusted": 0.6440355964403559,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "bm25_length_norm_broken",
+   "description": "BM25 b=0，长度归一失效",
+   "detected": true,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6594973544973545,
+     "delta": -0.010007936507936507,
+     "ci_low": -0.022275297619047618,
+     "ci_high": 0.0014949404761904733,
+     "p_value": 0.0491950804919508,
+     "p_adjusted": 0.0983901609839016,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.693465517844662,
+     "delta": -0.010308942924413195,
+     "ci_low": -0.018983961823886335,
+     "ci_high": -0.0021543720178543724,
+     "p_value": 0.008599140085991401,
+     "p_adjusted": 0.025797420257974206,
+     "regressed": true
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8195555555555556,
+     "delta": -0.0075,
+     "ci_low": -0.021666666666666667,
+     "ci_high": 0.005833333333333334,
+     "p_value": 0.18618138186181382,
+     "p_adjusted": 0.18618138186181382,
+     "regressed": false
+    }
+   ]
+  }
+ ],
+ "benign": [
+  {
+   "name": "bm25_k1_1.5",
+   "alarmed": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6730925925925926,
+     "delta": 0.0035873015873015878,
+     "ci_low": -0.0008386574074074071,
+     "ci_high": 0.00921342592592592,
+     "p_value": 0.8909109089091091,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7064348619789822,
+     "delta": 0.0026604012099069045,
+     "ci_low": -0.0005912244524730831,
+     "ci_high": 0.006698741511018469,
+     "p_value": 0.9033096690330967,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.830388888888889,
+     "delta": 0.0033333333333333335,
+     "ci_low": 0.0,
+     "ci_high": 0.01,
+     "p_value": 1.0,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "bm25_b_0.7",
+   "alarmed": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6710978835978836,
+     "delta": 0.0015925925925925925,
+     "ci_low": -0.0006296296296296294,
+     "ci_high": 0.005370370370370371,
+     "p_value": 0.6894310568943106,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7041749518442725,
+     "delta": 0.00040049107519728346,
+     "ci_low": -0.0005419240751513351,
+     "ci_high": 0.001671854752269073,
+     "p_value": 0.6894310568943106,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8270555555555555,
+     "delta": 0.0,
+     "ci_low": 0.0,
+     "ci_high": 0.0,
+     "p_value": 1.0,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "rrf_k_50",
+   "alarmed": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6699259259259259,
+     "delta": 0.00042063492063492065,
+     "ci_low": -0.00024603174603174627,
+     "ci_high": 0.0013333333333333333,
+     "p_value": 0.8395160483951605,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7048078431803487,
+     "delta": 0.0010333824112735014,
+     "ci_low": -0.00023662321105131926,
+     "ci_high": 0.0032346183777834255,
+     "p_value": 0.8395160483951605,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.830388888888889,
+     "delta": 0.0033333333333333335,
+     "ci_low": 0.0,
+     "ci_high": 0.01,
+     "p_value": 1.0,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  },
+  {
+   "name": "candidate_depth_200",
+   "alarmed": false,
+   "verdicts": [
+    {
+     "metric": "mrr@10",
+     "baseline": 0.669505291005291,
+     "candidate": 0.6709312169312169,
+     "delta": 0.001425925925925926,
+     "ci_low": -0.0002777777777777777,
+     "ci_high": 0.0032962962962962963,
+     "p_value": 0.9259074092590741,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "ndcg@10",
+     "baseline": 0.7037744607690751,
+     "candidate": 0.7073521391956793,
+     "delta": 0.0035776784266040216,
+     "ci_low": -0.000907938026451781,
+     "ci_high": 0.008286674238134428,
+     "p_value": 0.9259074092590741,
+     "p_adjusted": 1.0,
+     "regressed": false
+    },
+    {
+     "metric": "recall@10",
+     "baseline": 0.8270555555555555,
+     "candidate": 0.8387222222222223,
+     "delta": 0.011666666666666667,
+     "ci_low": -0.0033333333333333335,
+     "ci_high": 0.02666666666666667,
+     "p_value": 0.967003299670033,
+     "p_adjusted": 1.0,
+     "regressed": false
+    }
+   ]
+  }
+ ],
+ "null_simulation": {
+  "trials": 300,
+  "false_alarms": 9,
+  "nominal_alpha": 0.05
+ },
+ "sensitivity": [
+  {
+   "docs_lost": 0.01,
+   "seeds": 20,
+   "detected": 3,
+   "mean_worst_delta": -0.009941666666666666
+  },
+  {
+   "docs_lost": 0.02,
+   "seeds": 20,
+   "detected": 10,
+   "mean_worst_delta": -0.01670058590143633
+  },
+  {
+   "docs_lost": 0.05,
+   "seeds": 20,
+   "detected": 19,
+   "mean_worst_delta": -0.03940833333333334
+  },
+  {
+   "docs_lost": 0.1,
+   "seeds": 20,
+   "detected": 20,
+   "mean_worst_delta": -0.07395555555555557
+  },
+  {
+   "docs_lost": 0.2,
+   "seeds": 20,
+   "detected": 20,
+   "mean_worst_delta": -0.15096111111111107
+  }
+ ]
+}
