@@ -2,22 +2,19 @@
 """Score RAGTruth responses with the NLI and lexical detectors; safe to resume."""
 import argparse
 import json
-import random
 from pathlib import Path
 
-from common import load_ragtruth
+from common import calibration_and_test, load_ragtruth
 from ragate.faithfulness import is_claim, lexical_supports, sentence_supports, span_overlaps, split_sentences
 from ragate.onnx_models import EntailmentModel
 
 RESULTS = Path(__file__).resolve().parent.parent / "results"
-TRAIN_SAMPLE = 3000
 
 
 def select(rows):
     """All test responses, plus a fixed random sample of train responses for calibration."""
-    train = sorted((row for row in rows if row["split"] == "train"), key=lambda row: row["id"])
-    random.Random(20261109).shuffle(train)
-    return train[:TRAIN_SAMPLE] + [row for row in rows if row["split"] == "test"]
+    train, test = calibration_and_test(rows)
+    return train + test
 
 
 def score_row(row, entail):

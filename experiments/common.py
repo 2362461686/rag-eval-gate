@@ -1,7 +1,10 @@
 """Loaders for the public datasets; the data itself stays outside the repository."""
 import csv
 import json
+import random
 from pathlib import Path
+
+TRAIN_SAMPLE = 3000
 
 
 def _jsonl(path):
@@ -41,5 +44,12 @@ def load_ragtruth(root):
         if row["quality"] != "good":
             continue
         source = sources[row["source_id"]]
-        rows.append({**row, "task": source["task_type"], "evidence": flatten_evidence(source["source_info"])})
+        rows.append({**row, "task": source["task_type"], "evidence": flatten_evidence(source["source_info"]), "source": source})
     return rows
+
+
+def calibration_and_test(rows):
+    """A fixed random sample of train responses for calibration, in that random order, plus every test response."""
+    train = sorted((row for row in rows if row["split"] == "train"), key=lambda row: row["id"])
+    random.Random(20261109).shuffle(train)
+    return train[:TRAIN_SAMPLE], [row for row in rows if row["split"] == "test"]

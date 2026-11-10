@@ -1,0 +1,4 @@
+-r requirements-experiments.txt
+ragas==0.4.3
+openai==3.3.0
+instructor==1.17.0

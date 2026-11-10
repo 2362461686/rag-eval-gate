@@ -17,6 +17,7 @@ MODULES = {
     "gate.py": "tests/test_gate.py",
     "retrieval.py": "tests/test_retrieval.py",
     "faithfulness.py": "tests/test_faithfulness.py",
+    "judge.py": "tests/test_judge.py",
 }
 COMPARE = {
     ast.Gt: ast.GtE,
